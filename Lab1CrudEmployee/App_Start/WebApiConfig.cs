@@ -18,7 +18,7 @@ namespace Lab1CrudEmployee
             config.Formatters.JsonFormatter.SupportedMediaTypes.Add(new MediaTypeHeaderValue("text/html"));
             config.SuppressDefaultHostAuthentication();
             config.Filters.Add(new HostAuthenticationFilter(OAuthDefaults.AuthenticationType));
-
+            config.EnableCors();
             // Web API routes
             config.MapHttpAttributeRoutes();
 
