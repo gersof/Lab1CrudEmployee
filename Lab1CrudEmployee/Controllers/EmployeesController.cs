@@ -7,11 +7,13 @@ using System.Linq;
 using System.Net;
 using System.Net.Http;
 using System.Web.Http;
+using System.Web.Http.Cors;
 using System.Web.Http.Description;
 using Lab1CrudEmployee.Models;
 
 namespace Lab1CrudEmployee.Controllers
 {
+    [EnableCors(origins:"*",headers:"*", methods:"*")]
     public class EmployeesController : ApiController
     {
         private EmployeeDBEntities db = new EmployeeDBEntities();
@@ -33,6 +35,20 @@ namespace Lab1CrudEmployee.Controllers
             }
 
             return Ok(employee);
+        }  
+
+        // GET: api/Employees/5
+        [Route("api/Employees/GetEmployeeByName/{name?}")]
+        [EnableCors(origins: "*", headers: "*", methods: "*")]
+        public IQueryable<Employee> GetEmployeeByName(string name)
+        {
+            return db.Employees.Where(
+                x => x.FirstName.Contains(name) ||
+                     x.SecondName.Contains(name) ||
+                     x.FirstLastName.Contains(name) ||
+                     x.SecondLastName.Contains(name)
+            );
+
         }
 
         // PUT: api/Employees/5
